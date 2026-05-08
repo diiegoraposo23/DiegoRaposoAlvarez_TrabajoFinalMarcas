@@ -47,3 +47,60 @@ app.get('/peliculas/:id', (req, res) => {
     // Si existe, devuelve 200 OK y el objeto de la película.
     res.status(200).json(peliculaEncontrada);
 });
+
+// 3. Creación de nueva película.
+// Método: POST | Ruta: /películas.
+app.post('/peliculas', (req, res) => {
+    const nuevaPelicula = req.body;
+
+    // Valida los campos obligatorios.
+    if (!nuevaPelicula.titulo || !nuevaPelicula.director) {
+        return res.status(400).json({
+            error: "Bad request",
+            mensaje: "El título y el director son obligatorios para añadir otra película."
+        });
+    }
+
+    // Calculo de nuevo ID automáticamente.
+    const nuevoId = peliculas.length > 0 ? Math.max(...peliculas.map(p => p.id)) + 1 : + 1;
+    nuevaPelicula.id = nuevoId;
+
+    // Requisito: Código 201 creado.
+    res.status(201).json(nuevaPelicula);
+});
+
+// 4. Modificar película existente.
+// Método: PUT | Ruta: /películas/:id
+app.put('/peliculas/:id', (req, res) => {
+    const idBuscado = parseInt(req.params.id);
+    const indice = peliculas.findIndex(p => p.id === idBuscado);
+
+    // Control de errores.
+    if (indice === -1) {
+        return res.status(404).json({ error: "Película no encontrada." });
+    }
+
+    // Actualización de datos manteniendo el ID intacto.
+    peliculas[indice] = { ...peliculas[indice], ...req.body, id: idBuscado };
+
+    res.status(200).json(peliculas[indice]);
+});
+
+// 5. Elminar película.
+// Método: DELETE | Ruta: /peliculas/:id
+app.delete('/peliculas/:id', (req, res) => {
+    const idBuscado = parseInt(req.params.id);
+    const indice = peliculas.findIndex(p => p.id === idBuscado);
+
+    if (indice === -1) {
+        return res.status(404).json({ error: "Película no encontrada para eliminar."});
+    }
+
+    // Elimina la película del array.
+    const peliculaEliminada = peliculas.splice(indice, 1);
+
+    res.status(200).json({
+        mensaje: "Película eliminada correctamente.",
+        pelicula: peliculaEliminada[0]
+    });
+});
