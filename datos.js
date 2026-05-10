@@ -3,6 +3,7 @@
 const peliculas = [{
     id: 1,
     titulo: "El Caballero Oscuro",
+    director: "Cristopher Nolan",
     genero: "Acción",
     año: 2008,
     duracion_minutos: 152,

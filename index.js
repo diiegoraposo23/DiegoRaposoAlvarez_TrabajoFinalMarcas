@@ -19,11 +19,76 @@ app.listen(PORT, () => {
 })
 
 // 1. Obtener todas las películas.
-// Método GET con una ruta de /peliculas
+// Método GET | Ruta: /peliculas
 
+// 1. OBTENER TODAS LAS PELÍCULAS (Con Filtros y Ordenación)
+// Método: GET | Ruta: /peliculas
 app.get('/peliculas', (req, res) => {
-    // Si la página funciona correctamente, sale 200 OK y el listado completo de películas.
-    res.status(200).json(peliculas);
+    // Hacemos una copia del array para no modificar el original
+    let resultados = [...peliculas];
+
+    // Filtro de Texto: Por director (?director=nolan)
+    if (req.query.director) {
+        resultados = resultados.filter(p => 
+            p.director && p.director.toLowerCase().includes(req.query.director.toLowerCase())
+        );
+    }
+
+    // Filtro Booleano: Ganadora de Oscar (?oscar=true o ?oscar=false)
+    if (req.query.oscar) {
+        const esGanadora = req.query.oscar === 'true';
+        resultados = resultados.filter(p => p.ganadora_oscar === esGanadora);
+    }
+
+    // Filtro Numérico: Años posteriores a X (?año_desde=2000)
+    if (req.query.año_desde) {
+        resultados = resultados.filter(p => p.año >= parseInt(req.query.año_desde));
+    }
+
+    // Ordenación: Por nota IMDB (?sort=nota)
+    if (req.query.sort === 'nota') {
+        resultados.sort((a, b) => b.nota_imdb - a.nota_imdb); 
+    }
+
+    // Devolvemos los resultados filtrados
+    res.status(200).json(resultados);
+});
+
+/**
+ * Ruta de estadísticas.
+ */
+
+// Método: GET | Ruta: /peliculas/estadisticas
+app.get('/peliculas/estadisticas', (req, res) => {
+    if (peliculas.length === 0) {
+        return res.status(404).json({ error: "No hay películas para analizar."});
+    }
+
+    // 1. Media matemática: nota media del catálogo.
+    const sumaNotas = peliculas.reduce((acc, p) => acc + p.nota_imdb, 0);
+    const notaMedia = (sumaNotas / peliculas.length).toFixed(2);
+
+    // 2. Agrupar campos: contar cuántas películas hay por género.
+    const porGenero = peliculas.reduce((acc, p) => {
+        // Solo se cuenta si la película tiene un género definido.
+        if (p.genero) {
+            acc[p.genero] = (acc[p.genero] || 0) + 1;
+        }
+        return acc; 
+    }, {});
+
+    // 3. Top N registros: top 3 películas que más dinero han recaudado.
+    const top3Recaudacion = [...peliculas]
+        .sort((a, b) => b.recaudacion_millones - a.recaudacion_millones)
+        .slice(0, 3) // Solo las 3 primeras.
+        .map(p => ({ titulo: p.titulo, millones: p.recaudacion_millones }));
+
+    res.status(200).json({
+        total_peliculas: peliculas.length,
+        nota_media_catalogo: parseFloat(notaMedia),
+        recuento_por_genero: porGenero,
+        top_3_taquilla: top3Recaudacion
+    });
 });
 
 // 2. Obtener película por ID.
