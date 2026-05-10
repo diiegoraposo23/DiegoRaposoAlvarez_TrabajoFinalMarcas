@@ -104,3 +104,70 @@ app.delete('/peliculas/:id', (req, res) => {
         pelicula: peliculaEliminada[0]
     });
 });
+
+
+/**
+ * Recurso Secundario.
+ */
+
+// 6. Obtención de todas las críticas.
+// Método: GET | Ruta: /criticas.
+app.get('/criticas', (req, res) => {
+    res.status(200).json(criticas);
+});
+
+// 7. Obtener la crítica de una película en concreto.
+// Método: GET | Ruta: /peliculas/criticas
+app.get('/peliculas/:id/criticas', (req, res) => {
+    const peliculaId = parseInt(req.params.id);
+
+    // Primero se comprueba si la película existe.
+    const peliculaExiste = peliculas.find(p => p.id === peliculaId);
+    if (!peliculaExiste) {
+        return res.status(404).json({ error: "Película no encontrada." });
+    }
+
+    // Filtra la crítica que pertenezcan al mismo ID que la película.
+    const criticasPelicula = criticas.filter(c => c.pelicula_id === peliculaId);
+
+    res.status(200).json(criticasPelicula);
+});
+
+// 8. Crear una nueva crítica.
+// Método: POST | Ruta: /criticas
+app.post('/criticas', (req, res) => {
+    const nuevaCritica = req.body;
+
+    // Validación de los datos obligatorios.
+    if (!nuevaCritica.pelicula_id || !nuevaCritica.usuario || !nuevaCritica.estrellas) {
+        return res.status(400).json({
+            error: "Bad request",
+            mensaje: "Faltan datos, Necesidad pelicula_id, usuario y estrellas."
+        });
+    }
+
+    // Calcula el ID automáticamente.
+    const nuevoId = criticas.length > 0 ? Math.max(...criticas.map(c => c.id_critica)) + 1 : 1;
+    nuevaCritica.id_critica = nuevoId;
+
+    criticas.push(nuevaCritica);
+    res.status(201).json(nuevaCritica);
+});
+
+// 9. Eliminar una crítica.
+// Método: DELETE || Ruta: /criticas/:id
+app.delete('/criticas/:id', (req, res) => {
+    const idBuscado = parseInt(req.params.id);
+    const indice = criticas.findIndex(c => c.id_critica === idBuscado);
+
+    if (indice === -1) {
+        return res.status(404).json({ error: "Crítica no encontrada." });
+    }
+
+    const criticaEliminada = criticas.splice(indice, 1);
+
+    res.status(200).json({
+        mensaje: "Crítica eliminada correctamente.",
+        critica: criticaEliminada[0]
+    });
+});
