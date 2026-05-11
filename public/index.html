@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas en 2025</title>
+    <style>
+        /* Reset básico */
+        * { box-sizing: border-box; margin: 0; padding: 0;}
+
+        /* Paleta de colores */
+        :root {
+            --bg-fondo: #14181C;
+            --bg-tarjeta: #2C3440;
+            --texto-principal: #FFFFFF;
+            --texto-secundario: #9ab;
+            --verde-let: #00E054;
+            --oro-imdb: #F5C518;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-fondo);
+            color: var(--texto-principal);
+        }
+
+        /* Barra de navegación superior */
+        header {
+            background-color: #000000;
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        header h1 span {
+            color: var(--verde-let);
+        }
+
+        /* Buscador y estadísticas */
+        .controles {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .buscador {
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            background-color: var(--bg-tarjeta);
+            color: white;
+            width: 350px;
+            font-size: 15px;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .bucador:focus {
+            border: 1px solid var(--verde-let);
+            box-shadow: 0 0 8px rgba(0, 224, 84, 0.3);
+        }
+
+        .stats-bar strong {
+            color: var(--oro-imdb);
+            font-size: 16px;
+        }
+
+        /* Cuadrícula de películas */
+        .contenedor-peliculas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        /* Diseño de cada película */
+        .tarjeta {
+            background-color: var(--bg-tarjeta);
+            border-radius: 8px;
+            padding: 25px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-top: 3px solid transparent;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-5px);
+            border-top: 3px solid var(--verde-let);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+        }
+
+        .tarjeta.h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .nota {
+            display: inline-block;
+            background-color: var(--oro-imdb);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .tarjeta p {
+            font-size: 14px;
+            color: var(--texto-secundario);
+            margin-bottom: 8px;
+        }
+
+        .tarjeta p strong {
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1> Películas<span>2025 - 2026</span></h1>
+    </header>
+
+    <div class="controles">
+        <input type="text" id="input-busqueda" class="buscador" placeholder="Buscar por director">
+
+        <div id="stats-container" class="stats-bar">
+            Cargando estadísticas..
+        </div>
+    </div>
+
+    <div class="contenedor-peliculas" id="lista-peliculas"></div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

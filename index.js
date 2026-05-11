@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+// Sirve archivos estáticos desde la carpeta 'public'.
+app.use(express.static('public'));
 const PORT = 3000;
 
 // importación de datos simulados
