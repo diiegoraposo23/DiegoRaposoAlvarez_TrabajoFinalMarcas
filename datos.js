@@ -1,15 +1,16 @@
 // Datos previos (no definitivos)
 
 const peliculas = [{
-    id: 1,
-    titulo: "El Caballero Oscuro",
-    director: "Cristopher Nolan",
-    genero: "Acción",
-    año: 2008,
-    duracion_minutos: 152,
-    recaudacion_millones: 1004.9,
-    nota_imdb: 9.0,
-    ganadora_oscar: true
+        id: 1,
+        titulo: "El Caballero Oscuro",
+        director: "Cristopher Nolan",
+        genero: "Acción",
+        año: 2008,
+        duracion_minutos: 152,
+        recaudacion_millones: 1004.9,
+        nota_imdb: 9.0,
+        ganadora_oscar: true,
+        imagen: "imagenes/el-caballero-oscuro.jpg"
     },
     {
         id: 2,
@@ -20,7 +21,9 @@ const peliculas = [{
         duracion_minutos: 154,
         recaudacion_millones: 213.9,
         nota_imdb: 8.9,
-        ganadora_oscar: true
+        ganadora_oscar: true,
+        imagen: "/imagenes/MV5BYTViYTE3ZGQtNDBlMC00ZTAyLTkyODMtZGRiZDg0MjA2YThkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
+
     },
     {
         id: 3,
@@ -31,7 +34,8 @@ const peliculas = [{
         duracion_minutos: 166,
         recaudacion_millones: 711.8,
         nota_imdb: 8.6,
-        ganadora_oscar: false
+        ganadora_oscar: false,
+        imagen: "imagenes/Dune_Part_Two_poster.jpeg"
     }
 ];
 

@@ -33,15 +33,25 @@ async function obtenerPeliculas(directorBuscado = '') {
             const tarjeta = document.createElement('div');
             tarjeta.className = 'tarjeta';
 
-            tarjeta.innerHTML = `
-                <h3>${pelicula.titulo}</h3>
-                <span class="nota>IMDB ${pelicula.nota_imdb} </span>
-                <p><strong>Director:</stron> ${pelicula.director}</p>
-                <p><strong>Género:</strong> ${pelicula.genero}</p>
-                <p><strong>Año:</strong> ${pelicula.año}</p>
-                `;
+            // 1. Definición de imagen.
+            const cartel = pelicula.imagen || `imagenes/el-caballero-oscuro.jpg`;
 
-                contenedor.appendChild(tarjeta);
+            tarjeta.innerHTML = `
+                <img src="${cartel}" alt="Cartel de ${pelicula.titulo}">
+                
+                <div class="tarjeta-info">
+                    <h3>${pelicula.titulo}</h3>
+                    
+                    <div class="nota-container">
+                        <span class="estrella">★</span>
+                        <span class="nota-actual">${pelicula.nota_imdb.toFixed(1)}</span>
+                        <span>/ 10</span>
+                    </div>
+                </div>
+
+            `;
+
+            contenedor.appendChild(tarjeta); 
         });
 
     } catch (error) {
