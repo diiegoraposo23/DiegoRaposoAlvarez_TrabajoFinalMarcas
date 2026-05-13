@@ -52,6 +52,14 @@ app.get('/peliculas', (req, res) => {
         resultados.sort((a, b) => b.nota_imdb - a.nota_imdb); 
     }
 
+    // Segunda forma de obtener un registro concreto.
+    // Filtrar por título exacto.
+    if (req.query.titulo) {
+        resultados = resultados.filter(p => 
+            p.titulo && p.titulo.toLowerCase() === req.query.titulo.toLowerCase()
+        );
+    }
+
     // Devolvemos los resultados filtrados
     res.status(200).json(resultados);
 });
@@ -129,8 +137,10 @@ app.post('/peliculas', (req, res) => {
     }
 
     // Calculo de nuevo ID automáticamente.
-    const nuevoId = peliculas.length > 0 ? Math.max(...peliculas.map(p => p.id)) + 1 : + 1;
+    const nuevoId = peliculas.length > 0 ? Math.max(...peliculas.map(p => p.id)) + 1 : 1;
     nuevaPelicula.id = nuevoId;
+
+    peliculas.push(nuevaPelicula);
 
     // Requisito: Código 201 creado.
     res.status(201).json(nuevaPelicula);

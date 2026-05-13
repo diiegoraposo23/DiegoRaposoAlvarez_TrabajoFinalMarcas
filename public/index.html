@@ -235,6 +235,82 @@
             }
         }
 
+        /* Estilo para la Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .modal-contenido {
+            background: #1e293b;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 400px;
+            border: 1px solid #334155;
+        }
+
+        .cerrar {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+            color: #94a3b8;
+        }
+
+        #form-pelicula input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+        }
+
+        .btn-guardar {
+            width: 100%;
+            padding: 12px;
+            background: #60a5fa;
+            color: #0f172a;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Botones dentro de la tarjeta */
+        .acciones-tarjeta {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-borrar {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-editar {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
 
         
 
@@ -269,6 +345,25 @@
     <div class="contenedor-peliculas" id="lista-peliculas"></div>
 
     <div class="contenedor-peliculas" id="lista-peliculas"></div>
+
+    <div class="nav-enlaces">
+        <button id="btn-abrir-form" class="btn-nav">+ Añadir Película</button>
+    </div>
+
+    <div id="modal-pelicula" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar">&times;</span>
+            <h2 id="modal-titulo">Nueva Pelicula</h2>
+            <form id="form-pelicula">
+                <input type="hidden" id="peli-id"> <input type="text" id="titulo" placeholder="Título" required>
+                <input type="text" id="director" placeholder="Director" required>
+                <input type="number" id="año" placeholder="Año" required>
+                <input type="number" step="0.1" id="nota_imdb" placeholder="Nota IMDB" required>
+                <input type="text" id="imagen" placeholder="URL de la Imagen (Opcional)">
+                <button type="submit" class="btn-guardar">Guardar Película</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         @ 2026 - Trabajo Final Lenguaje de Marcas - Diego Raposo Alvarez.
