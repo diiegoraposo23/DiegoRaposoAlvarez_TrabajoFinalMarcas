@@ -25,28 +25,63 @@
         }
 
         /* Barra de navegación superior */
-        header {
-            background-color: #000000;
-            padding: 20px 40px;
-            border-bottom: 1px solid #333;
+        .navbar {
+            background-color: var(--bg-tarjeta);
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgb(0,0,0,0.3);
         }
 
-        header h1 {
-            font-size: 24px;
+        .nav-logo a {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-letterboxd {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            transition: transform 0.2 ease;
+        }
+
+        .logo-letterboxd:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-titulo h1 {
+            font-size: 26px;
+            color: var(--texto-principal);
+            text-align: center;
+            margin: 0;
+        }
+
+        .nav-enlaces a {
+            text-decoration: none;
+        }
+
+        .btn-nav {
+            background-color: var(--bg-fondo);
+            color: var(--texto-principal);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #334155;
             font-weight: bold;
-            letter-spacing: 1px;
+            font-size: 14px;
+            transition: all 0.2s ease;
         }
 
-        header h1 span {
-            color: var(--verde-let);
+        .btn-nav:hover {
+            background-color: #60A5FA;
+            color: #0F172A;
+            border-color: #60A5FA;
         }
 
         /* Buscador y estadísticas */
         .controles {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 30px auto;
             padding: 0 20px;
             display: flex;
@@ -80,9 +115,9 @@
         /* Cuadrícula de películas */
         .contenedor-peliculas {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 25px;
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto 50px auto;
             padding: 0 20px;
         }
@@ -105,8 +140,9 @@
 
         .tarjeta img {
             width: 100%;
-            height: 320px;
+            aspect-ratio: 2 / 3;
             object-fit: cover;
+            object-position: center;
         }
 
         .tarjeta-info {
@@ -156,13 +192,71 @@
             margin-top: 40px;
         }
 
+        /* Responsive */
+
+        /* Pantallas medianas */
+        @media (max-width: 1024px) {
+            .contenedor-peliculas {
+                grid-template-columns: repeat(3, 1fr); /* Se baja a 3 carteles por fila */
+            }
+        }
+
+        /* Pantallas pequeñas */
+        @media (max-width: 768px) {
+            .contenedor-peliculas {
+                grid-template-columns: repeat(2, 1fr); /* Se baja a 2 carteles por fila */
+            }
+
+            /* Apila el buscador y estadísticas */
+            .controles {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .buscador {
+                width: 100%; /* El buscador ocupa todo el ancho de la pantalla */
+            }
+
+            /* Título de la barra algo más pequeño */
+            .nav-titulo h1 { font-size: 20px;}
+        }
+
+        /* Pantallas más pequeñas */
+        @media (max-width: 480px) {
+            .contenedor-peliculas {
+                grid-template-columns: 1fr;
+            }
+
+            /* Apila la navbar entera */
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px;
+            }
+        }
+
+
+        
+
     </style>
 </head>
 <body>
 
-    <header>
-        <h1> Películas<span>2025 - 2026</span></h1>
-    </header>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="https://letterboxd.com/Diiegoraposo/" target="_blank" title="Mi Letterbox">
+                <img src="imagenes/letterboxd-mac-icon.png" alt="Logo Letterboxd" class="logo-letterboxd">
+            </a>
+        </div>
+
+        <div class="nav-titulo">
+            <h1>Mi<span>Catálogo</span> de Cine</h1>
+        </div>
+
+        <div class="nav-enlaces">
+            <a href="https://www.imdb.com/es-es/chart/top/?ref_=hm_nv_menu" class="btn-nav">Top 250</a>
+        </div>
+    </nav>
 
     <div class="controles">
         <input type="text" id="input-busqueda" class="buscador" placeholder="Buscar por director">
