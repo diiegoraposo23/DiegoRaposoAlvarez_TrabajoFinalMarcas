@@ -132,9 +132,7 @@ async function obtenerEstadisticas() {
 }
 
 
-// ==========================================
-// NUEVAS FUNCIONES PARA EL CRUD (Modal y Botones)
-// ==========================================
+/* Funciones para el CRUD */
 
 function abrirModal() {
     document.getElementById('modal-pelicula').style.display = 'block';
